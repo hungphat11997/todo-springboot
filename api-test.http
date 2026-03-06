@@ -1,0 +1,92 @@
+### Base URL (doi port neu can)
+@baseUrl = http://localhost:8080
+
+### ========== AUTH (khong can dang nhap) ==========
+
+### 1. Dang ky user moi
+POST {{baseUrl}}/api/auth/register
+Content-Type: application/json
+
+{
+  "username": "user3",
+  "password": "password123",
+  "role": "ROLE_USER"
+}
+
+### 2. Login (admin co san: admin / admin123)
+POST {{baseUrl}}/api/auth/login
+Content-Type: application/json
+
+{
+  "username": "admin",
+  "password": "admin123"
+}
+
+### ========== USER (can Basic Auth) ==========
+### Basic = base64(username:password). Admin co san: admin / admin123
+
+### 3. Xem thong tin user hien tai
+GET {{baseUrl}}/api/me
+Authorization: Basic YWRtaW46YWRtaW4xMjM=
+
+### ========== TASKS (user thuong) ==========
+
+### 4. Lay danh sach task cua minh
+GET {{baseUrl}}/api/tasks
+Authorization: Basic YWRtaW46YWRtaW4xMjM=
+
+### 5. Tao task moi
+POST {{baseUrl}}/api/tasks
+Content-Type: application/json
+Authorization: Basic YWRtaW46YWRtaW4xMjM=
+
+{
+  "title": "Hoc Spring Boot",
+  "description": "Lam bai tap API"
+}
+
+### 6. Xem 1 task theo id
+GET {{baseUrl}}/api/tasks/1
+Authorization: Basic YWRtaW46YWRtaW4xMjM=
+
+### 7. Cap nhat task
+PUT {{baseUrl}}/api/tasks/1
+Content-Type: application/json
+Authorization: Basic YWRtaW46YWRtaW4xMjM=
+
+{
+  "title": "Hoc Spring Boot (da xong)",
+  "description": "Lam bai tap API"
+}
+
+### 8. Xoa task
+DELETE {{baseUrl}}/api/tasks/1
+Authorization: Basic YWRtaW46YWRtaW4xMjM=
+
+### ========== ADMIN (chi tai khoan ROLE_ADMIN) ==========
+
+### 9. Lay tat ca user
+GET {{baseUrl}}/api/admin/users
+Authorization: Basic YWRtaW46YWRtaW4xMjM=
+
+### 10. Lay 1 user theo id
+GET {{baseUrl}}/api/admin/users/1
+Authorization: Basic YWRtaW46YWRtaW4xMjM=
+
+### 11. Cap nhat user (admin)
+PATCH {{baseUrl}}/api/admin/users/2
+Content-Type: application/json
+Authorization: Basic YWRtaW46YWRtaW4xMjM=
+
+{
+  "role": "ROLE_ADMIN",
+  "active": true
+}
+
+### 12. Lay tat ca task (admin)
+GET {{baseUrl}}/api/admin/tasks
+Authorization: Basic YWRtaW46YWRtaW4xMjM=
+
+### 13. Lay task theo userId (admin)
+GET {{baseUrl}}/api/admin/users/1/tasks
+Authorization: Basic YWRtaW46YWRtaW4xMjM=
